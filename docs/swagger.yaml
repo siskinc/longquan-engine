@@ -1,0 +1,15 @@
+basePath: /engine
+info:
+  contact:
+    email: susecjh@gmail.com
+    name: Daryl
+    url: https://www.daryl.top/
+  description: 龙泉决策引擎
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
