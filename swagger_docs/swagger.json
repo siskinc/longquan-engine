@@ -1,0 +1,120 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "龙泉决策引擎",
+        "title": "龙泉决策引擎",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Daryl",
+            "url": "https://www.daryl.top/",
+            "email": "susecjh@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/engine/api",
+    "paths": {
+        "/namespace": {
+            "post": {
+                "description": "创建命名空间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "命名空间"
+                ],
+                "summary": "创建命名空间",
+                "parameters": [
+                    {
+                        "description": "命名空间属性",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/namespace.CreateNamespaceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/namespace.Namespace"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httpx.JSONResult": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "回包code，表明是否正确，在code == 0时，表明服务正常",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "数据",
+                    "type": "object"
+                },
+                "message": {
+                    "description": "回报message，在code != 0时，展示给前端",
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "namespace.CreateNamespaceReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "rule-engine"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "longquan-sword"
+                }
+            }
+        },
+        "namespace.Namespace": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

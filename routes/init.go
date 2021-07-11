@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	ginxMiddlewares "github.com/goools/tools/ginx/middlewares"
 	"github.com/siskinc/longquan-engine/global"
+	namesapce "github.com/siskinc/longquan-engine/routes/namespace"
+	_ "github.com/siskinc/longquan-engine/swagger_docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -12,6 +14,9 @@ import (
 func Init(router *gin.Engine) {
 	router.Use(cors.Default())
 	router.Use(gin.LoggerWithFormatter(ginxMiddlewares.LoggerFormatter))
+
+	apiRouter := router.Group("/engine/api")
+	namesapce.InitRouter(apiRouter)
 
 	// swagger
 	{

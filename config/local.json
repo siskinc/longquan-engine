@@ -1,6 +1,6 @@
 {
   "mongo_db_driver": {
-    "uri": "mongodb://nsqd:27017/name_list",
+    "uri": "mongodb://nsqd:27017/longquan-engine",
     "database_name": "longquan-engine"
   },
   "host": "0.0.0.0",

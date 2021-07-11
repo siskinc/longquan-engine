@@ -6,7 +6,7 @@ import (
 	"github.com/siskinc/longquan-engine/routes"
 )
 
-// @title Swagger Example API
+// @title 龙泉决策引擎
 // @version 1.0
 // @description 龙泉决策引擎
 // @termsOfService http://swagger.io/terms/
@@ -17,8 +17,7 @@ import (
 
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @BasePath /engine
+// @BasePath /engine/api
 func main() {
 	router := gin.Default()
 	routes.Init(router)

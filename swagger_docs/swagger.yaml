@@ -1,0 +1,79 @@
+basePath: /engine/api
+definitions:
+  httpx.JSONResult:
+    properties:
+      code:
+        description: 回包code，表明是否正确，在code == 0时，表明服务正常
+        type: integer
+      data:
+        description: 数据
+        type: object
+      message:
+        description: 回报message，在code != 0时，展示给前端
+        example: success
+        type: string
+    type: object
+  namespace.CreateNamespaceReq:
+    properties:
+      description:
+        example: rule-engine
+        type: string
+      name:
+        example: longquan-sword
+        type: string
+    required:
+    - name
+    type: object
+  namespace.Namespace:
+    properties:
+      description:
+        description: 描述
+        type: string
+      id:
+        description: 主键ID
+        type: string
+      name:
+        description: 名称
+        type: string
+    type: object
+info:
+  contact:
+    email: susecjh@gmail.com
+    name: Daryl
+    url: https://www.daryl.top/
+  description: 龙泉决策引擎
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 龙泉决策引擎
+  version: "1.0"
+paths:
+  /namespace:
+    post:
+      consumes:
+      - application/json
+      description: 创建命名空间
+      parameters:
+      - description: 命名空间属性
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.CreateNamespaceReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/namespace.Namespace'
+              type: object
+      summary: 创建命名空间
+      tags:
+      - 命名空间
+swagger: "2.0"

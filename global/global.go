@@ -5,13 +5,14 @@ import (
 
 	"github.com/goools/tools/servicex"
 	"github.com/sirupsen/logrus"
+	mongodb "github.com/siskinc/longquan-engine/driver/mongodb"
 )
 
 type Configure struct {
-	// MongoDbDriver *driver.MongoDbDriver `json:"mongo_db_driver"`
-	Host        string `json:"host"`
-	Port        int    `json:"port"`
-	SwaggerHost string `json:"swagger_host"`
+	MongoDbDriver *mongodb.MongoDbDriver `json:"mongo_db_driver"`
+	Host          string                 `json:"host"`
+	Port          int                    `json:"port"`
+	SwaggerHost   string                 `json:"swagger_host"`
 }
 
 func (c *Configure) ServerAddress() string {
