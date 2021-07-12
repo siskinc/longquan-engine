@@ -8,8 +8,8 @@ func InitRouter(router *gin.RouterGroup) {
 	// grouper.GET("/", CreateNamespace)
 	// TODO 创建命名空间
 	grouper.POST("/", CreateNamespace)
-	// // TODO 修改命名空间
-	// grouper.PATCH("/:id")
+	// TODO 修改命名空间
+	grouper.PATCH("/:id", UpdateNamespace)
 	// TODO 删除命名空间
 	grouper.DELETE("/:id", DeleteNamespace)
 }

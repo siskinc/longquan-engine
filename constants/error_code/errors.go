@@ -1,13 +1,15 @@
 package error_code
 
-import "github.com/goools/tools/errorx"
+import (
+	"fmt"
 
-func createErrorHandler(code int) func(error) error {
-	return func(err error) error {
-		return errorx.NewError(code, err)
-	}
-}
+	"github.com/goools/tools/errorx"
+)
 
 var (
 	NewParameterInvalid = errorx.CreateErrorFuncHandler(CustomForbiddenParameterInvalid)
+)
+
+var (
+	ParameterInvalidIDError = NewParameterInvalid(fmt.Errorf("request id is invalid"))
 )

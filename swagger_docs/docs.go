@@ -110,6 +110,46 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "patch": {
+                "description": "修改命名空间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "命名空间"
+                ],
+                "summary": "修改命名空间",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "命名空间id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "命名空间更新信息",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/namespace.UpdateOneReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpx.JSONResult"
+                        }
+                    }
+                }
             }
         }
     },
@@ -162,6 +202,19 @@ var doc = `{
                 "name": {
                     "description": "名称",
                     "type": "string"
+                }
+            }
+        },
+        "namespace.UpdateOneReq": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "rule-engine"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "longquan-sword"
                 }
             }
         }

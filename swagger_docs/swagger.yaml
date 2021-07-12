@@ -36,6 +36,15 @@ definitions:
         description: 名称
         type: string
     type: object
+  namespace.UpdateOneReq:
+    properties:
+      description:
+        example: rule-engine
+        type: string
+      name:
+        example: longquan-sword
+        type: string
+    type: object
 info:
   contact:
     email: susecjh@gmail.com
@@ -96,6 +105,33 @@ paths:
           schema:
             $ref: '#/definitions/httpx.JSONResult'
       summary: 删除命名空间
+      tags:
+      - 命名空间
+    patch:
+      consumes:
+      - application/json
+      description: 修改命名空间
+      parameters:
+      - description: 命名空间id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      - description: 命名空间更新信息
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/namespace.UpdateOneReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpx.JSONResult'
+      summary: 修改命名空间
       tags:
       - 命名空间
 swagger: "2.0"
