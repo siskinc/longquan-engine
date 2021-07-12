@@ -76,4 +76,26 @@ paths:
       summary: 创建命名空间
       tags:
       - 命名空间
+  /namespace/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除命名空间
+      parameters:
+      - description: 命名空间id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpx.JSONResult'
+      summary: 删除命名空间
+      tags:
+      - 命名空间
 swagger: "2.0"

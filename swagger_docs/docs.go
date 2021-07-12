@@ -78,6 +78,39 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/namespace/{id}": {
+            "delete": {
+                "description": "删除命名空间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "命名空间"
+                ],
+                "summary": "删除命名空间",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "命名空间id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpx.JSONResult"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
