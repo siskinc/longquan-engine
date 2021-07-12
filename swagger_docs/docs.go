@@ -34,6 +34,80 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/namespace": {
+            "get": {
+                "description": "查询命名空间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "命名空间"
+                ],
+                "summary": "查询命名空间",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "描述(模糊查询)",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "主键id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称(模糊查询)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：查询第某页",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：每页数量",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列",
+                        "name": "sortedField",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResultPaged"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/namespace.Namespace"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "创建命名空间",
                 "consumes": [
@@ -146,7 +220,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/httpx.JSONResult"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/namespace.Namespace"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -169,6 +255,28 @@ var doc = `{
                     "description": "回报message，在code != 0时，展示给前端",
                     "type": "string",
                     "example": "success"
+                }
+            }
+        },
+        "httpx.JSONResultPaged": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "回包code，表明是否正确，在code == 0时，表明服务正常",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "数据",
+                    "type": "object"
+                },
+                "message": {
+                    "description": "回报message，在code != 0时，展示给前端",
+                    "type": "string",
+                    "example": "success"
+                },
+                "total": {
+                    "description": "总数量",
+                    "type": "integer"
                 }
             }
         },

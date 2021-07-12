@@ -13,6 +13,22 @@ definitions:
         example: success
         type: string
     type: object
+  httpx.JSONResultPaged:
+    properties:
+      code:
+        description: 回包code，表明是否正确，在code == 0时，表明服务正常
+        type: integer
+      data:
+        description: 数据
+        type: object
+      message:
+        description: 回报message，在code != 0时，展示给前端
+        example: success
+        type: string
+      total:
+        description: 总数量
+        type: integer
+    type: object
   namespace.CreateNamespaceReq:
     properties:
       description:
@@ -59,6 +75,52 @@ info:
   version: "1.0"
 paths:
   /namespace:
+    get:
+      consumes:
+      - application/json
+      description: 查询命名空间
+      parameters:
+      - description: 描述(模糊查询)
+        in: query
+        name: description
+        type: string
+      - description: 主键id
+        in: query
+        name: id
+        type: string
+      - description: 名称(模糊查询)
+        in: query
+        name: name
+        type: string
+      - description: 分页：查询第某页
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 分页：每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列
+        in: query
+        name: sortedField
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResultPaged'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/namespace.Namespace'
+                  type: array
+              type: object
+      summary: 查询命名空间
+      tags:
+      - 命名空间
     post:
       consumes:
       - application/json
@@ -130,7 +192,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/httpx.JSONResult'
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/namespace.Namespace'
+              type: object
       summary: 修改命名空间
       tags:
       - 命名空间
