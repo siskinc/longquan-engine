@@ -6,6 +6,7 @@ import (
 
 	"github.com/goools/tools/errorx"
 	"github.com/sirupsen/logrus"
+	"github.com/siskinc/longquan-engine/constants/types"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -63,6 +64,6 @@ func (mongoDbDriver *MongoDbDriver) DataBase(dbName string, opts ...*options.Dat
 	return mongoDbDriver.client.Database(dbName, opts...)
 }
 
-func (mongoDbDriver *MongoDbDriver) Collection(dbName string, collectionName string, dbOpts ...*options.DatabaseOptions) *mongo.Collection {
-	return mongoDbDriver.DataBase(dbName, dbOpts...).Collection(collectionName)
+func (mongoDbDriver *MongoDbDriver) Collection(dbName string, collectionName types.Collection, dbOpts ...*options.DatabaseOptions) *mongo.Collection {
+	return mongoDbDriver.DataBase(dbName, dbOpts...).Collection(string(collectionName))
 }

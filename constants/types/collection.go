@@ -3,5 +3,7 @@ package types
 type Collection string
 
 const (
-	CollectionNamespace = "namespace"
+	CollectionNamespace   Collection = "namespace"
+	CollectionProperty    Collection = "property"
+	CollectionPropertySet Collection = "property_set"
 )
