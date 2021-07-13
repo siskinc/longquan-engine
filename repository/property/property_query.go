@@ -6,8 +6,8 @@ import (
 	"github.com/goools/tools/mongox"
 	"github.com/sirupsen/logrus"
 	propertyModel "github.com/siskinc/longquan-engine/models/property"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"gopkg.in/mgo.v2/bson"
 )
 
 func (repo *PropertyMongoRepository) Query(filter bson.D, pageIndex, pageSize int64, sortedField string) (propertyObjs []*propertyModel.Property, total int64, err error) {

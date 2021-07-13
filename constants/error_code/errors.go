@@ -11,5 +11,6 @@ var (
 )
 
 var (
-	ParameterInvalidIDError = NewParameterInvalid(fmt.Errorf("request id is invalid"))
+	ParameterInvalidIDError          = NewParameterInvalid(fmt.Errorf("request id is invalid"))
+	ParameterInvalidNamespaceIDError = NewParameterInvalid(fmt.Errorf("namespace id is invalid"))
 )
