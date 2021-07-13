@@ -10,9 +10,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (repo *PropertyMongoRepository) UpdateOne(oid primitive.ObjectID, updater bson.M) (propertyObj *propertyModel.Property, err error) {
+func (repo *PropertySetMongoRepository) UpdateOne(oid primitive.ObjectID, updater bson.M) (propertySetObj *propertyModel.PropertySet, err error) {
 	if mongox.EmptyOid(oid) {
-		err = fmt.Errorf("update one property have an err: object id is empty")
+		err = fmt.Errorf("update one property set have an err: object id is empty")
 		return
 	}
 	filter := mongox.MakeQueryByID(oid)
@@ -21,7 +21,7 @@ func (repo *PropertyMongoRepository) UpdateOne(oid primitive.ObjectID, updater b
 	if err != nil {
 		return
 	}
-	propertyObj = &propertyModel.Property{}
-	err = result.Decode(propertyObj)
+	propertySetObj = &propertyModel.PropertySet{}
+	err = result.Decode(propertySetObj)
 	return
 }

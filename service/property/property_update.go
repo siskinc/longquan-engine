@@ -4,8 +4,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/siskinc/longquan-engine/constants/error_code"
 	propertyModel "github.com/siskinc/longquan-engine/models/property"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"gopkg.in/mgo.v2/bson"
 )
 
 type UpdatePropertyReq struct {
