@@ -2,7 +2,7 @@ package property
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
-// PropertySet 数据集
+// PropertySet 属性集
 // UniqueIndex NamespaceID + Code
 type PropertySet struct {
 	ID          primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`                    // 主键ID
