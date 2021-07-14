@@ -3,10 +3,12 @@ package property
 import (
 	"fmt"
 
+	"github.com/goools/tools/errorx"
 	"github.com/sirupsen/logrus"
 	"github.com/siskinc/longquan-engine/constants/error_code"
 	"github.com/siskinc/longquan-engine/constants/types"
 	propertyModel "github.com/siskinc/longquan-engine/models/property"
+	namespaceService "github.com/siskinc/longquan-engine/service/namespace"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -28,8 +30,46 @@ func (service *PropertyService) CreateProperty(req *CreatePropertyReq) (property
 		return
 	}
 
-	// TODO: check property set code is valid
-	// TODO: check NamespaceID + PropertySetCode + Name exist
+	var exist bool
+	// check namespace exist
+	namespaceServiceObj := namespaceService.NewService()
+	exist, err = namespaceServiceObj.CheckExist(namespaceOid)
+	if err != nil {
+		return
+	}
+	if !exist {
+		err = errorx.NewError(
+			error_code.CustomForbiddenNotFoundNamespace,
+			fmt.Errorf("not found namespace, namespace id: %s", req.NamespaceID),
+		)
+		return
+	}
+
+	// check property set code is valid
+	propertySetService := NewPropertySetService()
+	exist, err = propertySetService.checkExist(namespaceOid, req.PropertySetCode)
+	if err != nil {
+		return
+	}
+	if !exist {
+		err = errorx.NewError(
+			error_code.CustomForbiddenNotFoundPropertySet,
+			fmt.Errorf("not found property set, namespace id: %s, code: %s", req.NamespaceID, req.PropertySetCode),
+		)
+		return
+	}
+	// check NamespaceID + PropertySetCode + Name exist
+	exist, err = service.checkExist(namespaceOid, req.PropertySetCode, req.Name)
+	if err != nil {
+		return
+	}
+	if exist {
+		err = errorx.NewError(
+			error_code.CustomForbiddenConflictProperty,
+			fmt.Errorf("property %s exist", req.Name),
+		)
+		return
+	}
 
 	propertyObj = &propertyModel.Property{
 		ID:              primitive.NewObjectID(),
