@@ -35,7 +35,7 @@ var doc = `{
     "paths": {
         "/namespace": {
             "get": {
-                "description": "查询命名空间",
+                "description": "查询属性",
                 "consumes": [
                     "application/json"
                 ],
@@ -43,9 +43,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "命名空间"
+                    "场景管理"
                 ],
-                "summary": "查询命名空间",
+                "summary": "查询属性",
                 "parameters": [
                     {
                         "type": "string",
@@ -66,6 +66,12 @@ var doc = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "命名空间ID",
+                        "name": "namespaceID",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "分页：查询第某页",
                         "name": "pageIndex",
@@ -75,6 +81,12 @@ var doc = `{
                         "type": "integer",
                         "description": "分页：每页数量",
                         "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "属性集code",
+                        "name": "propertySetCode",
                         "in": "query"
                     },
                     {
@@ -98,7 +110,7 @@ var doc = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/namespace.Namespace"
+                                                "$ref": "#/definitions/property.Property"
                                             }
                                         }
                                     }
@@ -144,6 +156,88 @@ var doc = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/namespace.Namespace"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/namespace-set": {
+            "get": {
+                "description": "查询属性集",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "查询属性集",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据集CODE",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "描述",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "命名空间ID",
+                        "name": "namespace_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：查询第某页",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：每页数量",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列",
+                        "name": "sortedField",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResultPaged"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/property.PropertySet"
+                                            }
                                         }
                                     }
                                 }
@@ -229,6 +323,268 @@ var doc = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/namespace.Namespace"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/property": {
+            "post": {
+                "description": "创建属性",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "创建属性",
+                "parameters": [
+                    {
+                        "description": "属性基本信息",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/property.CreatePropertyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/property.Property"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/property-set": {
+            "post": {
+                "description": "创建属性集",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "创建属性集",
+                "parameters": [
+                    {
+                        "description": "属性集基本信息",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/property.CreatePropertySetReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/property.PropertySet"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/property-set/{id}": {
+            "delete": {
+                "description": "删除属性集",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "删除属性集",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "属性集id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpx.JSONResult"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "修改属性集",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "修改属性集",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "属性集id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "属性集更新信息",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/property.UpdatePropertySetReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/property.PropertySet"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/property/{id}": {
+            "delete": {
+                "description": "删除属性",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "删除属性",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "属性id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpx.JSONResult"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "修改属性",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "修改属性",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "属性id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "属性更新信息",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/property.UpdatePropertyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/property.Property"
                                         }
                                     }
                                 }
@@ -323,6 +679,128 @@ var doc = `{
                 "name": {
                     "type": "string",
                     "example": "longquan-sword"
+                }
+            }
+        },
+        "property.CreatePropertyReq": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "description": "字段类型 int, string, float, ${property_set_code}",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "字段名",
+                    "type": "string"
+                },
+                "namespace_id": {
+                    "description": "关联命名空间",
+                    "type": "string"
+                },
+                "property_set_code": {
+                    "description": "关联属性集",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "字段分类 system or custome",
+                    "type": "string"
+                }
+            }
+        },
+        "property.CreatePropertySetReq": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "属性集code",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "字段名",
+                    "type": "string"
+                },
+                "namespace_id": {
+                    "description": "关联命名空间",
+                    "type": "string"
+                }
+            }
+        },
+        "property.Property": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "description": "字段类型 int, string, float, ${property_set_code}",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "字段名",
+                    "type": "string"
+                },
+                "namespace_id": {
+                    "description": "关联命名空间",
+                    "type": "string"
+                },
+                "property_set_code": {
+                    "description": "关联属性集",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "字段分类 system or custome",
+                    "type": "string"
+                }
+            }
+        },
+        "property.PropertySet": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "数据集CODE",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "string"
+                },
+                "namespace_id": {
+                    "description": "命名空间ID",
+                    "type": "string"
+                }
+            }
+        },
+        "property.UpdatePropertyReq": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                }
+            }
+        },
+        "property.UpdatePropertySetReq": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "描述",
+                    "type": "string"
                 }
             }
         }

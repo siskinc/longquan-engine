@@ -61,6 +61,93 @@ definitions:
         example: longquan-sword
         type: string
     type: object
+  property.CreatePropertyReq:
+    properties:
+      class:
+        description: 字段类型 int, string, float, ${property_set_code}
+        type: string
+      description:
+        description: 描述
+        type: string
+      name:
+        description: 字段名
+        type: string
+      namespace_id:
+        description: 关联命名空间
+        type: string
+      property_set_code:
+        description: 关联属性集
+        type: string
+      type:
+        description: 字段分类 system or custome
+        type: string
+    type: object
+  property.CreatePropertySetReq:
+    properties:
+      code:
+        description: 属性集code
+        type: string
+      description:
+        description: 描述
+        type: string
+      name:
+        description: 字段名
+        type: string
+      namespace_id:
+        description: 关联命名空间
+        type: string
+    type: object
+  property.Property:
+    properties:
+      class:
+        description: 字段类型 int, string, float, ${property_set_code}
+        type: string
+      description:
+        description: 描述
+        type: string
+      id:
+        description: 主键ID
+        type: string
+      name:
+        description: 字段名
+        type: string
+      namespace_id:
+        description: 关联命名空间
+        type: string
+      property_set_code:
+        description: 关联属性集
+        type: string
+      type:
+        description: 字段分类 system or custome
+        type: string
+    type: object
+  property.PropertySet:
+    properties:
+      code:
+        description: 数据集CODE
+        type: string
+      description:
+        description: 描述
+        type: string
+      id:
+        description: 主键ID
+        type: string
+      namespace_id:
+        description: 命名空间ID
+        type: string
+    type: object
+  property.UpdatePropertyReq:
+    properties:
+      description:
+        description: 描述
+        type: string
+    type: object
+  property.UpdatePropertySetReq:
+    properties:
+      description:
+        description: 描述
+        type: string
+    type: object
 info:
   contact:
     email: susecjh@gmail.com
@@ -78,7 +165,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 查询命名空间
+      description: 查询属性
       parameters:
       - description: 描述(模糊查询)
         in: query
@@ -92,6 +179,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: 命名空间ID
+        in: query
+        name: namespaceID
+        type: string
       - description: 分页：查询第某页
         in: query
         name: pageIndex
@@ -100,6 +191,10 @@ paths:
         in: query
         name: pageSize
         type: integer
+      - description: 属性集code
+        in: query
+        name: propertySetCode
+        type: string
       - description: 排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列
         in: query
         name: sortedField
@@ -115,12 +210,12 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/namespace.Namespace'
+                    $ref: '#/definitions/property.Property'
                   type: array
               type: object
-      summary: 查询命名空间
+      summary: 查询属性
       tags:
-      - 命名空间
+      - 场景管理
     post:
       consumes:
       - application/json
@@ -147,6 +242,57 @@ paths:
       summary: 创建命名空间
       tags:
       - 命名空间
+  /namespace-set:
+    get:
+      consumes:
+      - application/json
+      description: 查询属性集
+      parameters:
+      - description: 数据集CODE
+        in: query
+        name: code
+        type: string
+      - description: 描述
+        in: query
+        name: description
+        type: string
+      - description: 主键ID
+        in: query
+        name: id
+        type: string
+      - description: 命名空间ID
+        in: query
+        name: namespace_id
+        type: string
+      - description: 分页：查询第某页
+        in: query
+        name: pageIndex
+        type: integer
+      - description: 分页：每页数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列
+        in: query
+        name: sortedField
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResultPaged'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/property.PropertySet'
+                  type: array
+              type: object
+      summary: 查询属性集
+      tags:
+      - 场景管理
   /namespace/{id}:
     delete:
       consumes:
@@ -201,4 +347,166 @@ paths:
       summary: 修改命名空间
       tags:
       - 命名空间
+  /property:
+    post:
+      consumes:
+      - application/json
+      description: 创建属性
+      parameters:
+      - description: 属性基本信息
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/property.CreatePropertyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/property.Property'
+              type: object
+      summary: 创建属性
+      tags:
+      - 场景管理
+  /property-set:
+    post:
+      consumes:
+      - application/json
+      description: 创建属性集
+      parameters:
+      - description: 属性集基本信息
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/property.CreatePropertySetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/property.PropertySet'
+              type: object
+      summary: 创建属性集
+      tags:
+      - 场景管理
+  /property-set/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除属性集
+      parameters:
+      - description: 属性集id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpx.JSONResult'
+      summary: 删除属性集
+      tags:
+      - 场景管理
+    patch:
+      consumes:
+      - application/json
+      description: 修改属性集
+      parameters:
+      - description: 属性集id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      - description: 属性集更新信息
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/property.UpdatePropertySetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/property.PropertySet'
+              type: object
+      summary: 修改属性集
+      tags:
+      - 场景管理
+  /property/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除属性
+      parameters:
+      - description: 属性id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpx.JSONResult'
+      summary: 删除属性
+      tags:
+      - 场景管理
+    patch:
+      consumes:
+      - application/json
+      description: 修改属性
+      parameters:
+      - description: 属性id
+        in: path
+        minLength: 1
+        name: id
+        required: true
+        type: string
+      - description: 属性更新信息
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/property.UpdatePropertyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httpx.JSONResult'
+            - properties:
+                data:
+                  $ref: '#/definitions/property.Property'
+              type: object
+      summary: 修改属性
+      tags:
+      - 场景管理
 swagger: "2.0"

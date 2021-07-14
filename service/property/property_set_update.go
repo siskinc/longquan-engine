@@ -12,7 +12,7 @@ type UpdatePropertySetReq struct {
 	Description string `json:"description,omitempty"` // 描述
 }
 
-func (service *PropertySetService) Update(id string, req *UpdatePropertyReq) (propertySetObj *propertyModel.PropertySet, err error) {
+func (service *PropertySetService) Update(id string, req *UpdatePropertySetReq) (propertySetObj *propertyModel.PropertySet, err error) {
 	var oid primitive.ObjectID
 	oid, err = primitive.ObjectIDFromHex(id)
 	if err != nil {

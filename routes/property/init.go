@@ -6,14 +6,14 @@ func InitRouter(router *gin.RouterGroup) {
 	propertySetGrouper := router.Group("/property-set")
 	propertyGrouper := router.Group("/property")
 	// 属性集
-	propertySetGrouper.GET("/")
-	propertySetGrouper.POST("/")
-	propertySetGrouper.PATCH("/:id")
-	propertySetGrouper.DELETE("/:id")
+	propertySetGrouper.GET("/", QueryPropertySet)
+	propertySetGrouper.POST("/", CreatePropertySet)
+	propertySetGrouper.PATCH("/:id", UpdatePropertySet)
+	propertySetGrouper.DELETE("/:id", DeletePropertySet)
 
 	// 属性
-	propertyGrouper.GET("/")
-	propertyGrouper.POST("/")
-	propertyGrouper.PATCH("/:id")
-	propertyGrouper.DELETE("/:id")
+	propertyGrouper.GET("/", QueryProperty)
+	propertyGrouper.POST("/", CreateProperty)
+	propertyGrouper.PATCH("/:id", UpdateProperty)
+	propertyGrouper.DELETE("/:id", DeleteProperty)
 }
