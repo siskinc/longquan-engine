@@ -13,5 +13,5 @@ const (
 
 // 冲突错误
 const (
-	CustomForbiddenConflictNamespace = 402001
+	CustomForbiddenConflictPropertySet = 402001
 )
