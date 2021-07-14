@@ -36,7 +36,18 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js'),
+    // Proxy: proxyObj,
+    proxy: {
+      '/api/name-list': {  //使用"/api"来代替"http://f.apiplus.c"
+        target: 'http://localhost:8001', //源地址，这个是本地接口配置的域名
+        changeOrigin: true, //改变源
+        pathRewrite: {
+          '^/api': '/' //路径重写
+        },
+        logLevel: 'debug'
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
