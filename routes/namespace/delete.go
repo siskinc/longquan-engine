@@ -3,6 +3,7 @@ package namesapce
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/goools/tools/ginx/httpx"
+	"github.com/sirupsen/logrus"
 	namespaceService "github.com/siskinc/longquan-engine/service/namespace"
 )
 
@@ -23,4 +24,6 @@ func DeleteNamespace(c *gin.Context) {
 		httpx.SetRespErr(c, err)
 		return
 	}
+	logrus.Errorf("delete %s namespace success", namespaceId)
+	httpx.SetDefaultRespJSON(c, nil)
 }

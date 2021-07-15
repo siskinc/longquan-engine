@@ -39,11 +39,11 @@ module.exports = {
     before: require('./mock/mock-server.js'),
     // Proxy: proxyObj,
     proxy: {
-      '/api/name-list': {  //使用"/api"来代替"http://f.apiplus.c"
+      '/api': {  //使用"/api"来代替"http://f.apiplus.c"
         target: 'http://localhost:8001', //源地址，这个是本地接口配置的域名
         changeOrigin: true, //改变源
         pathRewrite: {
-          '^/api': '/' //路径重写
+          '^/api': '/engine/api' //路径重写
         },
         logLevel: 'debug'
       }
