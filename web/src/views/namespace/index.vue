@@ -39,6 +39,7 @@
       fit
       highlight-current-row
       @selection-change="handleSelectionChange"
+      @cell-dblclick="handleUpdateNamespace"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column align="center" label="ID" width="240" fixed="left">
@@ -74,15 +75,23 @@
       :visible.sync="dialogVisible.create"
       @refresh="refreshNamespaceDataList"
     />
+    <!-- 更新命名空间 -->
+    <update-namespace-form-dialog
+      :visible.sync="dialogVisible.update"
+      :selectData.sync="selectedData"
+      @refresh="refreshNamespaceDataList"
+    />
   </div>
 </template>
 
 <script>
 import { queryNamespace, deleteNamespace } from "@/api/namespace";
 import createNamespaceFormDialog from "./create_dialog";
+import updateNamespaceFormDialog from "./update_dialog"
 export default {
   components: {
     createNamespaceFormDialog,
+    updateNamespaceFormDialog,
   },
   data() {
     return {
@@ -103,6 +112,7 @@ export default {
         create: false,
         update: false,
       },
+      selectedData: {},
     };
   },
   created: function () {
@@ -144,6 +154,10 @@ export default {
     handleSizeChange: function (currentSize) {
       this.pageInfo.pageSize = currentSize;
       this.refreshNamespaceDataList();
+    },
+    handleUpdateNamespace(row) {
+      this.selectedData = row;
+      this.dialogVisible.update = true;
     },
   },
 };
