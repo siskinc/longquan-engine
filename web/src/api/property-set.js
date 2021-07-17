@@ -19,3 +19,10 @@ export async function queryPropertySet(params) {
   })
   return data;
 }
+
+export function deletePropertySet(id) {
+  return request({
+    url: `/property-set/${id}`,
+    method: 'delete',
+  })
+}

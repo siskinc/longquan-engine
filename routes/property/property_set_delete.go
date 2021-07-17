@@ -23,4 +23,5 @@ func DeletePropertySet(c *gin.Context) {
 		httpx.SetRespErr(c, err)
 		return
 	}
+	httpx.SetDefaultRespJSON(c, nil)
 }

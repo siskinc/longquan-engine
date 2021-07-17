@@ -97,7 +97,7 @@
 
 <script>
 import { queryNamespaceDataList } from "@/api/namespace";
-import { queryPropertySet } from "@/api/property-set";
+import { queryPropertySet, deletePropertySet } from "@/api/property-set";
 import createPropertySetFormDialog from "./create-dialog";
 
 export default {
@@ -118,6 +118,7 @@ export default {
       loadingPropertySetDataList: true,
       namespaceList: {},
       loadingNamespace: true,
+      selectedDataList: [],
     };
   },
   async created() {
@@ -153,8 +154,18 @@ export default {
 
       this.loadingPropertySetDataList = false;
     },
-    handleBatchDeletePropertySet: function () {},
-    handleSelectionChange: function (row) {},
+    handleBatchDeletePropertySet: async function () {
+      for (const index in this.selectedDataList) {
+        const propertySet = this.selectedDataList[index];
+        await deletePropertySet(propertySet.id).then((_) => {
+          this.$message.success(`删除 ${propertySet.code} 属性成功`);
+        });
+      }
+      this.refreshPropertySetDataList();
+    },
+    handleSelectionChange: function (selectedDataList) {
+      this.selectedDataList = selectedDataList;
+    },
     handleUpdatePropertySet: function () {},
   },
 };
