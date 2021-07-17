@@ -16,6 +16,18 @@ export function queryNamespace(params) {
   });
 }
 
+export async function queryNamespaceDataList(params) {
+  let data = [];
+  await request({
+    url: '/namespace',
+    method: 'get',
+    params: params,
+  }).then(response => {
+    data = response.data;
+  })
+  return data;
+}
+
 export function deleteNamespace(id) {
   return request({
     url: `/namespace/${id}`,

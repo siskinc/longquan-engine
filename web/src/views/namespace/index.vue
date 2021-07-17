@@ -86,8 +86,8 @@
 
 <script>
 import { queryNamespace, deleteNamespace } from "@/api/namespace";
-import createNamespaceFormDialog from "./create_dialog";
-import updateNamespaceFormDialog from "./update_dialog"
+import createNamespaceFormDialog from "./create-dialog";
+import updateNamespaceFormDialog from "./update-dialog";
 export default {
   components: {
     createNamespaceFormDialog,

@@ -51,7 +51,7 @@ func (service *PropertySetService) Create(req *CreatePropertySetReq) (propertySe
 		logrus.Errorf("query namespace when create property set have an err: %v, namespace id: %s", err, req.NamespaceID)
 		return
 	}
-	if total > 0 {
+	if total <= 0 {
 		logrus.Errorf("cannot find namespace with id: %s", req.NamespaceID)
 		err = errorx.NewError(error_code.CustomForbiddenNotFoundNamespace, fmt.Errorf("not found namespace with id: %s", req.NamespaceID))
 		return

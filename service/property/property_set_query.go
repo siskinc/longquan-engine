@@ -10,10 +10,10 @@ import (
 )
 
 type QueryPropertySetReq struct {
-	ID          *string `json:"id,omitempty"`           // 主键ID
-	NamespaceID *string `json:"namespace_id,omitempty"` // 命名空间ID
-	Code        *string `json:"code,omitempty"`         // 数据集CODE
-	Description *string `json:"description,omitempty"`  // 描述
+	ID          *string `form:"id,omitempty"`           // 主键ID
+	NamespaceID *string `form:"namespace_id,omitempty"` // 命名空间ID
+	Code        *string `form:"code,omitempty"`         // 数据集CODE
+	Description *string `form:"description,omitempty"`  // 描述
 	PageIndex   int64   `form:"page_index"`             // 分页：查询第某页
 	PageSize    int64   `form:"page_size"`              // 分页：每页数量
 	SortedField *string `form:"sorted_field"`           // 排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列
@@ -49,6 +49,11 @@ func (service *PropertySetService) QueryPropertySet(req *QueryPropertySetReq) (p
 		}
 	}
 
-	propertySetObjs, total, err = service.mongoRepo.Qeury(filter, req.PageIndex, req.PageSize, *req.SortedField)
+	sortedField := ""
+	if req.SortedField != nil && *req.SortedField != "" {
+		sortedField = *req.SortedField
+	}
+
+	propertySetObjs, total, err = service.mongoRepo.Qeury(filter, req.PageIndex, req.PageSize, sortedField)
 	return
 }
