@@ -26,3 +26,11 @@ export function deletePropertySet(id) {
     method: 'delete',
   })
 }
+
+export function updatePropertySet(id, data) {
+  return request({
+    url: `/property-set/${id}`,
+    method: 'patch',
+    data
+  })
+}

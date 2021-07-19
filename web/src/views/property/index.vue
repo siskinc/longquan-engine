@@ -92,6 +92,11 @@
       :visible.sync="dialogVisible.create"
       @refresh="refreshPropertySetDataList"
     />
+    <update-property-set-form-dialog
+      :visible.sync="dialogVisible.update"
+      :selectData.sync="selectData"
+      @refresh="refreshPropertySetDataList"
+    />
   </div>
 </template>
 
@@ -99,9 +104,13 @@
 import { queryNamespaceDataList } from "@/api/namespace";
 import { queryPropertySet, deletePropertySet } from "@/api/property-set";
 import createPropertySetFormDialog from "./create-dialog";
+import updatePropertySetFormDialog from "./update-dialog";
 
 export default {
-  components: { createPropertySetFormDialog },
+  components: {
+    createPropertySetFormDialog,
+    updatePropertySetFormDialog,
+  },
   setup() {},
   data() {
     return {
@@ -119,6 +128,7 @@ export default {
       namespaceList: {},
       loadingNamespace: true,
       selectedDataList: [],
+      selectData: {},
     };
   },
   async created() {
@@ -166,7 +176,10 @@ export default {
     handleSelectionChange: function (selectedDataList) {
       this.selectedDataList = selectedDataList;
     },
-    handleUpdatePropertySet: function () {},
+    handleUpdatePropertySet: function (row) {
+      this.selectData = row;
+      this.dialogVisible.update = true;
+    },
   },
 };
 </script>
