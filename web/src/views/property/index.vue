@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- 表单，查询命名空间 -->
+    <!-- 表单，查询属性集 -->
     <el-form ref="form" :model="form" label-width="120px" :inline="true">
       <el-button
         type="primary"
@@ -87,6 +87,12 @@
           <span>{{ scope.row.description }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+        <el-button type="text" @click="handleUpdatePropertySet(scope.row)">修改</el-button>
+        <el-button type="text">属性字段</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <create-property-set-form-dialog
       :visible.sync="dialogVisible.create"
@@ -103,8 +109,8 @@
 <script>
 import { queryNamespaceDataList } from "@/api/namespace";
 import { queryPropertySet, deletePropertySet } from "@/api/property-set";
-import createPropertySetFormDialog from "./create-dialog";
-import updatePropertySetFormDialog from "./update-dialog";
+import createPropertySetFormDialog from "./create-property-set-dialog";
+import updatePropertySetFormDialog from "./update-property-set-dialog";
 
 export default {
   components: {
