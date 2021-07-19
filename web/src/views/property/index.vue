@@ -122,6 +122,7 @@ export default {
       },
       dialogVisible: {
         create: false,
+        update: false,
       },
       propertySetList: [],
       loadingPropertySetDataList: true,
