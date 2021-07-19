@@ -31,6 +31,6 @@ export function updatePropertySet(id, data) {
   return request({
     url: `/property-set/${id}`,
     method: 'patch',
-    data
+    data,
   })
 }

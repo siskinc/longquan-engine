@@ -78,7 +78,7 @@
     <!-- 更新命名空间 -->
     <update-namespace-form-dialog
       :visible.sync="dialogVisible.update"
-      :selectData.sync="selectedData"
+      :select-data.sync="selectedData"
       @refresh="refreshNamespaceDataList"
     />
   </div>

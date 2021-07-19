@@ -94,7 +94,7 @@
     />
     <update-property-set-form-dialog
       :visible.sync="dialogVisible.update"
-      :selectData.sync="selectData"
+      :select-data.sync="selectData"
       @refresh="refreshPropertySetDataList"
     />
   </div>

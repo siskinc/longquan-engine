@@ -44,7 +44,9 @@ export default {
     },
     selectData: {
       type: Object,
-      default: {},
+      default: () => {
+        return {};
+      },
     },
   },
   data: function () {
