@@ -89,8 +89,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-        <el-button type="text" @click="handleUpdatePropertySet(scope.row)">修改</el-button>
-        <el-button type="text">属性字段</el-button>
+          <el-button type="text" @click="handleUpdatePropertySet(scope.row)">修改</el-button>
+          <el-button type="text" @click="operationProperties(scope.row)">属性字段</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -103,6 +103,10 @@
       :select-data.sync="selectData"
       @refresh="refreshPropertySetDataList"
     />
+    <operation-properties-drawer
+      :drawer.sync="drawer"
+      :select-data.sync="selectData"
+    />
   </div>
 </template>
 
@@ -111,11 +115,13 @@ import { queryNamespaceDataList } from "@/api/namespace";
 import { queryPropertySet, deletePropertySet } from "@/api/property-set";
 import createPropertySetFormDialog from "./create-property-set-dialog";
 import updatePropertySetFormDialog from "./update-property-set-dialog";
+import operationPropertiesDrawer from "./operation-properties-drawer"
 
 export default {
   components: {
     createPropertySetFormDialog,
     updatePropertySetFormDialog,
+    operationPropertiesDrawer,
   },
   setup() {},
   data() {
@@ -136,6 +142,7 @@ export default {
       loadingNamespace: true,
       selectedDataList: [],
       selectData: {},
+      drawer: false,
     };
   },
   async created() {
@@ -186,6 +193,10 @@ export default {
     handleUpdatePropertySet: function (row) {
       this.selectData = row;
       this.dialogVisible.update = true;
+    },
+    operationProperties: function (row) {
+      this.selectData = row;
+      this.drawer = true;
     },
   },
 };
