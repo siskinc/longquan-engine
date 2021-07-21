@@ -26,3 +26,16 @@ func NewPropertySetService() *PropertySetService {
 	}
 	return serviceObj
 }
+
+type PropertySetMapService struct {
+	propertyService    *PropertyService
+	propertySetService *PropertySetService
+}
+
+func NewPropertySetMapService() *PropertySetMapService {
+	serviceObj := &PropertySetMapService{
+		propertyService:    NewPropertyService(),
+		propertySetService: NewPropertySetService(),
+	}
+	return serviceObj
+}

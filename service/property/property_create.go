@@ -76,8 +76,8 @@ func (service *PropertyService) CreateProperty(req *CreatePropertyReq) (property
 		NamespaceID:     namespaceOid,
 		PropertySetCode: req.PropertySetCode,
 		Name:            req.Name,
-		Class:           types.PropertyTypeEnum(req.Class),
-		Type:            req.Type,
+		Class:           req.Class,
+		Type:            types.PropertyTypeEnum(req.Type),
 		Description:     req.Description,
 	}
 	err = service.mongoRepo.Create(propertyObj)

@@ -26,3 +26,15 @@ func NewPropertySetMongoRepository(driver *mongodb.MongoDbDriver) *PropertySetMo
 	repo.collection = driver.Collection(global.Config.MongoDbDriver.DatabaseName, types.CollectionPropertySet)
 	return repo
 }
+
+type PropertyMapMongoRepository struct {
+	*PropertyMongoRepository
+	*PropertySetMongoRepository
+}
+
+func NewPropertyMapMongoRepository(driver *mongodb.MongoDbDriver) *PropertyMapMongoRepository {
+	repo := &PropertyMapMongoRepository{}
+	repo.PropertyMongoRepository = NewPropertyMongoRepository(driver)
+	repo.PropertySetMongoRepository = NewPropertySetMongoRepository(driver)
+	return repo
+}

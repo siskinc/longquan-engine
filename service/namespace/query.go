@@ -1,6 +1,7 @@
 package namespace
 
 import (
+	"github.com/goools/tools/ginx/paramsx"
 	"github.com/goools/tools/mongox"
 	"github.com/sirupsen/logrus"
 	"github.com/siskinc/longquan-engine/constants/error_code"
@@ -41,6 +42,7 @@ func (service *Service) Query(req *QueryReq) (namespaceObjs []*namespaceModel.Na
 	if req.SortedField != nil && *req.SortedField != "" {
 		sortedField = *req.SortedField
 	}
-	namespaceObjs, total, err = service.mongoRepo.Query(filter, req.PageIndex, req.PageSize, sortedField)
+	pageIndex, pageSize := paramsx.ShiftPage(req.PageIndex, req.PageSize)
+	namespaceObjs, total, err = service.mongoRepo.Query(filter, pageIndex, pageSize, sortedField)
 	return
 }

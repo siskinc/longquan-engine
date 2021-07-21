@@ -12,7 +12,7 @@ type Property struct {
 	NamespaceID     primitive.ObjectID     `json:"namespace_id,omitempty" bson:"namespace_id,omitempty"`           // 关联命名空间
 	PropertySetCode string                 `json:"property_set_code,omitempty" bson:"property_set_code,omitempty"` // 关联属性集
 	Name            string                 `json:"name,omitempty" bson:"name,omitempty"`                           // 字段名
-	Class           types.PropertyTypeEnum `json:"class,omitempty" bson:"class,omitempty"`                         // 字段类型 int, string, float, ${property_set_code}
-	Type            string                 `json:"type,omitempty" bson:"type,omitempty"`                           // 字段分类 system or custome
+	Class           string                 `json:"class,omitempty" bson:"class,omitempty"`                         // 字段类型 int, string, float, ${property_set_code}
+	Type            types.PropertyTypeEnum `json:"type,omitempty" bson:"type,omitempty"`                           // 字段分类 system or custome
 	Description     string                 `json:"description,omitempty" bson:"description,omitempty"`             // 描述
 }

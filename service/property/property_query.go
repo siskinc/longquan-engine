@@ -1,6 +1,7 @@
 package property
 
 import (
+	"github.com/goools/tools/ginx/paramsx"
 	"github.com/goools/tools/mongox"
 	"github.com/sirupsen/logrus"
 	"github.com/siskinc/longquan-engine/constants/error_code"
@@ -52,7 +53,8 @@ func (service *PropertyService) Query(req *QueryPropertyReq) (propertyObjs []*pr
 			filter = append(filter, bson.E{Key: "description", Value: *req.Description})
 		}
 	}
-	propertyObjs, total, err = service.mongoRepo.Query(filter, req.PageIndex, req.PageSize, *req.SortedField)
+	pageIndex, pageSize := paramsx.ShiftPage(req.PageIndex, req.PageSize)
+	propertyObjs, total, err = service.mongoRepo.Query(filter, pageIndex, pageSize, *req.SortedField)
 	if err != nil {
 		logrus.Errorf("query property is err: %v, request: %+v", err, req)
 		return

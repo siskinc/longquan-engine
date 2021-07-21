@@ -1,6 +1,7 @@
 package property
 
 import (
+	"github.com/goools/tools/ginx/paramsx"
 	"github.com/goools/tools/mongox"
 	"github.com/sirupsen/logrus"
 	"github.com/siskinc/longquan-engine/constants/error_code"
@@ -53,7 +54,7 @@ func (service *PropertySetService) QueryPropertySet(req *QueryPropertySetReq) (p
 	if req.SortedField != nil && *req.SortedField != "" {
 		sortedField = *req.SortedField
 	}
-
-	propertySetObjs, total, err = service.mongoRepo.Qeury(filter, req.PageIndex, req.PageSize, sortedField)
+	pageIndex, pageSize := paramsx.ShiftPage(req.PageIndex, req.PageSize)
+	propertySetObjs, total, err = service.mongoRepo.Qeury(filter, pageIndex, pageSize, sortedField)
 	return
 }
