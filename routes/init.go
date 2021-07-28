@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	ginxMiddlewares "github.com/goools/tools/ginx/middlewares"
 	"github.com/siskinc/longquan-engine/global"
+	config "github.com/siskinc/longquan-engine/routes/config"
 	namesapce "github.com/siskinc/longquan-engine/routes/namespace"
 	"github.com/siskinc/longquan-engine/routes/property"
 	_ "github.com/siskinc/longquan-engine/swagger_docs"
@@ -19,6 +20,7 @@ func Init(router *gin.Engine) {
 	apiRouter := router.Group("/engine/api")
 	namesapce.InitRouter(apiRouter)
 	property.InitRouter(apiRouter)
+	config.InitRouter(apiRouter)
 
 	// swagger
 	{

@@ -17,7 +17,7 @@ import (
 // @Produce json
 // @Param message query propertyService.QueryPropertyReq false "查询信息"
 // @Success 200 {object} httpx.JSONResultPaged.{data=[]propertyModel.Property}
-// @Router /namespace [get]
+// @Router /property [get]
 func QueryProperty(c *gin.Context) {
 	var (
 		req          = &propertyService.QueryPropertyReq{}

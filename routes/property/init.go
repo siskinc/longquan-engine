@@ -20,5 +20,5 @@ func InitRouter(router *gin.RouterGroup) {
 	propertyGrouper.DELETE("/:id", DeleteProperty)
 
 	// 属性集展示信息
-	propertySetMapGrouper.GET("/")
+	propertySetMapGrouper.GET("/", PropertySerMapQuery)
 }
