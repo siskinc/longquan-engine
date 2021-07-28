@@ -6,7 +6,7 @@ import (
 	"github.com/siskinc/longquan-engine/constants/types"
 )
 
-// QueryProperty godoc
+// PropertyTypeEnumData godoc
 // @TAGS 场景管理
 // @Summary 查询属性分类
 // @Description 查询属性分类
@@ -19,4 +19,16 @@ func PropertyTypeEnumData(c *gin.Context) {
 		string(types.PropertyTypeEnumCustom): "自定义类型",
 		string(types.PropertyTypeEnumSystem): "系统类型",
 	})
+}
+
+// PropertySystemClassEnumData godoc
+// @TAGS 场景管理
+// @Summary 查询系统属性类型
+// @Description 查询系统属性类型
+// @Accept json
+// @Produce json
+// @Success 200 {object} httpx.JSONResult.{data=[]string}
+// @Router /config/property-system-class-enum [get]
+func PropertySystemClassEnumData(c *gin.Context) {
+	httpx.SetDefaultRespJSON(c, types.AllPropertySystemClassEnum())
 }

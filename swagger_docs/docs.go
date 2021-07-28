@@ -33,9 +33,9 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/namespace": {
+        "/config/property-system-class-enum": {
             "get": {
-                "description": "查询属性",
+                "description": "查询系统属性类型",
                 "consumes": [
                     "application/json"
                 ],
@@ -45,7 +45,83 @@ var doc = `{
                 "tags": [
                     "场景管理"
                 ],
-                "summary": "查询属性",
+                "summary": "查询系统属性类型",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/config/property-type-enum": {
+            "get": {
+                "description": "查询属性分类",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "查询属性分类",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/namespace": {
+            "get": {
+                "description": "查询命名空间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "命名空间"
+                ],
+                "summary": "查询命名空间",
                 "parameters": [
                     {
                         "type": "string",
@@ -66,12 +142,6 @@ var doc = `{
                         "in": "query"
                     },
                     {
-                        "type": "string",
-                        "description": "命名空间ID",
-                        "name": "namespaceID",
-                        "in": "query"
-                    },
-                    {
                         "type": "integer",
                         "description": "分页：查询第某页",
                         "name": "pageIndex",
@@ -81,12 +151,6 @@ var doc = `{
                         "type": "integer",
                         "description": "分页：每页数量",
                         "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "属性集code",
-                        "name": "propertySetCode",
                         "in": "query"
                     },
                     {
@@ -110,7 +174,7 @@ var doc = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/property.Property"
+                                                "$ref": "#/definitions/namespace.Namespace"
                                             }
                                         }
                                     }
@@ -200,7 +264,7 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "命名空间ID",
-                        "name": "namespace_id",
+                        "name": "namespaceID",
                         "in": "query"
                     },
                     {
@@ -333,6 +397,92 @@ var doc = `{
             }
         },
         "/property": {
+            "get": {
+                "description": "查询属性",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "查询属性",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "描述(模糊查询)",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "主键id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称(模糊查询)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "命名空间ID",
+                        "name": "namespaceID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：查询第某页",
+                        "name": "pageIndex",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页：每页数量",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "属性集code",
+                        "name": "propertySetCode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序字段，默认是以主键倒序，例如：-name,这个例子是以name为倒序排列",
+                        "name": "sortedField",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResultPaged"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/property.Property"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "创建属性",
                 "consumes": [
@@ -415,6 +565,54 @@ var doc = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/property.PropertySet"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/property-set-map": {
+            "get": {
+                "description": "查询属性地图",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "场景管理"
+                ],
+                "summary": "查询属性地图",
+                "parameters": [
+                    {
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "属性集id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httpx.JSONResultPaged"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/property.PropertyMap"
+                                            }
                                         }
                                     }
                                 }
@@ -735,6 +933,45 @@ var doc = `{
         "property.Property": {
             "type": "object",
             "properties": {
+                "class": {
+                    "description": "字段类型 int, string, float, ${property_set_code}",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "字段名",
+                    "type": "string"
+                },
+                "namespace_id": {
+                    "description": "关联命名空间",
+                    "type": "string"
+                },
+                "property_set_code": {
+                    "description": "关联属性集",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "字段分类 system or custome",
+                    "type": "string"
+                }
+            }
+        },
+        "property.PropertyMap": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/property.PropertyMap"
+                    }
+                },
                 "class": {
                     "description": "字段类型 int, string, float, ${property_set_code}",
                     "type": "string"

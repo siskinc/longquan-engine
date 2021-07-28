@@ -8,7 +8,7 @@ import (
 // Property 属性
 // Unique Index: NamespaceID PropertySetCode Name
 type Property struct {
-	ID              primitive.ObjectID     `json:"id,omitempty" bson:"id,omitempty"`                               // 主键ID
+	ID              primitive.ObjectID     `json:"id,omitempty" bson:"_id,omitempty"`                              // 主键ID
 	NamespaceID     primitive.ObjectID     `json:"namespace_id,omitempty" bson:"namespace_id,omitempty"`           // 关联命名空间
 	PropertySetCode string                 `json:"property_set_code,omitempty" bson:"property_set_code,omitempty"` // 关联属性集
 	Name            string                 `json:"name,omitempty" bson:"name,omitempty"`                           // 字段名
