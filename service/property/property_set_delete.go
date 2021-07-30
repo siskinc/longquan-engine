@@ -15,7 +15,7 @@ func (service *PropertySetService) Delete(id string) (err error) {
 		return
 	}
 
-	err = service.mongoRepo.Delete(oid)
+	err = service.propertySetMongoRepo.Delete(oid)
 	if err != nil {
 		logrus.Errorf("delete property have an err: %v, id: %s", err, id)
 		return

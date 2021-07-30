@@ -26,7 +26,7 @@ func (service *PropertySetService) Update(id string, req *UpdatePropertySetReq) 
 			"description": req.Description,
 		},
 	}
-	propertySetObj, err = service.mongoRepo.UpdateOne(oid, updater)
+	propertySetObj, err = service.propertySetMongoRepo.UpdateOne(oid, updater)
 	if err != nil {
 		logrus.Errorf("update property set have an err: %v, id: %s, req: %+v, updater: %+v", err, id, req, updater)
 		return

@@ -17,25 +17,14 @@ func NewPropertyService() *PropertyService {
 }
 
 type PropertySetService struct {
-	mongoRepo *propertyRepository.PropertySetMongoRepository
+	propertySetMongoRepo *propertyRepository.PropertySetMongoRepository
+	propertyMongoRepo    *propertyRepository.PropertyMongoRepository
 }
 
 func NewPropertySetService() *PropertySetService {
 	serviceObj := &PropertySetService{
-		mongoRepo: propertyRepository.NewPropertySetMongoRepository(global.Config.MongoDbDriver),
-	}
-	return serviceObj
-}
-
-type PropertySetMapService struct {
-	propertyService    *PropertyService
-	propertySetService *PropertySetService
-}
-
-func NewPropertySetMapService() *PropertySetMapService {
-	serviceObj := &PropertySetMapService{
-		propertyService:    NewPropertyService(),
-		propertySetService: NewPropertySetService(),
+		propertySetMongoRepo: propertyRepository.NewPropertySetMongoRepository(global.Config.MongoDbDriver),
+		propertyMongoRepo:    propertyRepository.NewPropertyMongoRepository(global.Config.MongoDbDriver),
 	}
 	return serviceObj
 }

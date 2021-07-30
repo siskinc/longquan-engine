@@ -595,7 +595,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/property.PropertyMap"
+                                                "$ref": "#/definitions/property.PropertySet"
                                             }
                                         }
                                     }
@@ -937,44 +937,9 @@
                     "description": "关联命名空间",
                     "type": "string"
                 },
-                "property_set_code": {
-                    "description": "关联属性集",
-                    "type": "string"
-                },
-                "type": {
-                    "description": "字段分类 system or custome",
-                    "type": "string"
-                }
-            }
-        },
-        "property.PropertyMap": {
-            "type": "object",
-            "properties": {
-                "children": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/property.PropertyMap"
-                    }
-                },
-                "class": {
-                    "description": "字段类型 int, string, float, ${property_set_code}",
-                    "type": "string"
-                },
-                "description": {
-                    "description": "描述",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "主键ID",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "字段名",
-                    "type": "string"
-                },
-                "namespace_id": {
-                    "description": "关联命名空间",
-                    "type": "string"
+                "property_set": {
+                    "description": "如果属性的类型是自定义类型, 那么会将对应的property-set取出",
+                    "$ref": "#/definitions/property.PropertySet"
                 },
                 "property_set_code": {
                     "description": "关联属性集",
@@ -1004,6 +969,13 @@
                 "namespace_id": {
                     "description": "命名空间ID",
                     "type": "string"
+                },
+                "property_list": {
+                    "description": "属性集下对应的属性",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/property.Property"
+                    }
                 }
             }
         },

@@ -15,18 +15,18 @@ import (
 // @Accept json
 // @Produce json
 // @Param id query string true "属性集id" minlength(1)
-// @Success 200 {object} httpx.JSONResultPaged.{data=[]propertyModel.PropertyMap}
+// @Success 200 {object} httpx.JSONResultPaged.{data=[]propertyModel.PropertySet}
 // @Router /property-set-map [get]
 func PropertySerMapQuery(c *gin.Context) {
 	id := c.Query("id")
-	service := propertyService.NewPropertySetMapService()
-	var propertyMap *propertyModel.PropertyMap
+	service := propertyService.NewPropertySetService()
+	var propertySet *propertyModel.PropertySet
 	var err error
-	propertyMap, err = service.Query(id)
+	propertySet, err = service.QueryPropertySetMap(id)
 	if err != nil {
 		logrus.Errorf("query property map have an err: %v, id is %s", err, id)
 		httpx.SetRespErr(c, err)
 		return
 	}
-	httpx.SetDefaultRespJSON(c, propertyMap)
+	httpx.SetDefaultRespJSON(c, propertySet)
 }

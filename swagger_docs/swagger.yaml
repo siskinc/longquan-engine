@@ -114,34 +114,9 @@ definitions:
       namespace_id:
         description: 关联命名空间
         type: string
-      property_set_code:
-        description: 关联属性集
-        type: string
-      type:
-        description: 字段分类 system or custome
-        type: string
-    type: object
-  property.PropertyMap:
-    properties:
-      children:
-        items:
-          $ref: '#/definitions/property.PropertyMap'
-        type: array
-      class:
-        description: 字段类型 int, string, float, ${property_set_code}
-        type: string
-      description:
-        description: 描述
-        type: string
-      id:
-        description: 主键ID
-        type: string
-      name:
-        description: 字段名
-        type: string
-      namespace_id:
-        description: 关联命名空间
-        type: string
+      property_set:
+        $ref: '#/definitions/property.PropertySet'
+        description: 如果属性的类型是自定义类型, 那么会将对应的property-set取出
       property_set_code:
         description: 关联属性集
         type: string
@@ -163,6 +138,11 @@ definitions:
       namespace_id:
         description: 命名空间ID
         type: string
+      property_list:
+        description: 属性集下对应的属性
+        items:
+          $ref: '#/definitions/property.Property'
+        type: array
     type: object
   property.UpdatePropertyReq:
     properties:
@@ -542,7 +522,7 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/property.PropertyMap'
+                    $ref: '#/definitions/property.PropertySet'
                   type: array
               type: object
       summary: 查询属性地图

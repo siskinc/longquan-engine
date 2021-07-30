@@ -18,7 +18,7 @@ func (service *PropertySetService) checkExist(namespaceOid primitive.ObjectID, c
 		},
 	}
 	var total int64
-	_, total, err = service.mongoRepo.Qeury(filter, 0, 0, "")
+	_, total, err = service.propertySetMongoRepo.Qeury(filter, 0, 0, "")
 	if err != nil {
 		logrus.Errorf("check property set is exist have an err: %v, namespace id %s, code is %s", err, namespaceOid.Hex(), code)
 		return

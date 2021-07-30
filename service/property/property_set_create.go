@@ -59,7 +59,7 @@ func (service *PropertySetService) Create(req *CreatePropertySetReq) (propertySe
 
 	// check property set code exist
 	propertySetCodeExistFilter := service.makePropertySetCodeExistFilter(namespaceOid, req.Code)
-	_, total, err = service.mongoRepo.Qeury(propertySetCodeExistFilter, 0, 0, "")
+	_, total, err = service.propertySetMongoRepo.Qeury(propertySetCodeExistFilter, 0, 0, "")
 	if err != nil {
 		logrus.Errorf("query property set when create property set have an err: %v, request: %+v", err, req)
 		return
@@ -77,7 +77,7 @@ func (service *PropertySetService) Create(req *CreatePropertySetReq) (propertySe
 		Code:        req.Code,
 		Description: req.Description,
 	}
-	err = service.mongoRepo.Create(propertySetObj)
+	err = service.propertySetMongoRepo.Create(propertySetObj)
 	if err != nil {
 		logrus.Errorf("create property set have an err: %v, property object: %+v", err, propertySetObj)
 		return

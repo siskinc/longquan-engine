@@ -1,6 +1,8 @@
 package property
 
 import (
+	"fmt"
+
 	"github.com/goools/tools/ginx/paramsx"
 	"github.com/goools/tools/mongox"
 	"github.com/sirupsen/logrus"
@@ -55,6 +57,54 @@ func (service *PropertySetService) QueryPropertySet(req *QueryPropertySetReq) (p
 		sortedField = *req.SortedField
 	}
 	pageIndex, pageSize := paramsx.ShiftPage(req.PageIndex, req.PageSize)
-	propertySetObjs, total, err = service.mongoRepo.Qeury(filter, pageIndex, pageSize, sortedField)
+	propertySetObjs, total, err = service.propertySetMongoRepo.Qeury(filter, pageIndex, pageSize, sortedField)
+	return
+}
+
+func (service *PropertySetService) QueryByID(id string) (propertySet *propertyModel.PropertySet, err error) {
+	var oid primitive.ObjectID
+	oid, err = primitive.ObjectIDFromHex(id)
+	if err != nil {
+		err = error_code.ParameterInvalidIDError
+		return
+	}
+	filter := mongox.MakeQueryByID(oid)
+	var propertySetObjs []*propertyModel.PropertySet
+	var total int64
+	propertySetObjs, total, err = service.propertySetMongoRepo.Qeury(filter, 0, 0, "-_id")
+	if err != nil {
+		return
+	}
+	if total <= 0 {
+		err = error_code.NewCustomForbiddenNotFoundPropertySetError(fmt.Errorf("cannot find property set by id, id: %s", id))
+		return
+	}
+	propertySet = propertySetObjs[0]
+	return
+}
+
+func (service *PropertySetService) QueryByNamespaceAndCode(namespaceOid primitive.ObjectID, code string) (propertySet *propertyModel.PropertySet, err error) {
+	filter := bson.D{}
+	filter = append(filter, bson.E{
+		Key:   "namespace_id",
+		Value: namespaceOid,
+	})
+	filter = append(filter, bson.E{
+		Key:   "code",
+		Value: code,
+	})
+	var propertySetObjs []*propertyModel.PropertySet
+	var total int64
+	propertySetObjs, total, err = service.propertySetMongoRepo.Qeury(filter, 0, 0, "-_id")
+	if err != nil {
+		return
+	}
+	if total <= 0 {
+		err = error_code.NewCustomForbiddenNotFoundPropertySetError(
+			fmt.Errorf("cannot find property set by namespace_id and code, namespace_id: %s, code: %s", namespaceOid.String(), code),
+		)
+		return
+	}
+	propertySet = propertySetObjs[0]
 	return
 }

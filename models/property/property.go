@@ -15,4 +15,5 @@ type Property struct {
 	Class           string                 `json:"class,omitempty" bson:"class,omitempty"`                         // 字段类型 int, string, float, ${property_set_code}
 	Type            types.PropertyTypeEnum `json:"type,omitempty" bson:"type,omitempty"`                           // 字段分类 system or custome
 	Description     string                 `json:"description,omitempty" bson:"description,omitempty"`             // 描述
+	PropertySet     *PropertySet           `json:"property_set" bson:"-"`                                          // 如果属性的类型是自定义类型, 那么会将对应的property-set取出
 }

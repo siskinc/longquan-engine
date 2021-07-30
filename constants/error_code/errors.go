@@ -8,6 +8,7 @@ import (
 
 var (
 	NewParameterInvalid = errorx.CreateErrorFuncHandler(CustomForbiddenParameterInvalid)
+	NewCustomForbiddenNotFoundPropertySetError = errorx.CreateErrorFuncHandler(CustomForbiddenNotFoundPropertySet)
 )
 
 var (
